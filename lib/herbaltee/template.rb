@@ -13,13 +13,15 @@ module Herbaltee
 
     def binder(vars = {})
       b = blank
-      vars.each {|k,v| self.define_singleton_method("ht_#{k}") { v }}
+      vars.each {|k,v| define_singleton_method("ht_#{k}") { v }}
       b
     end
 
-    def method_missing(meth)
-      if self.respond_to?("ht_#{meth}")
-        eval "ht_#{meth}"
+    def method_missing(meth, *args)
+      if respond_to?("ht_#{meth}")
+        send("ht_#{meth}")
+      else
+        super
       end
     end
 
