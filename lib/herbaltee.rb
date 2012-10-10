@@ -1,4 +1,5 @@
 require 'erb'
+require 'fileutils'
 require 'logger'
 
 module Herbaltee
@@ -10,8 +11,9 @@ module Herbaltee
   end
 
   def self.now
-    DateTime.now.strftime(DATE_FORMAT)
+    Time.now.strftime(DATE_FORMAT)
   end
 end
 
+require 'herbaltee/binder'
 require 'herbaltee/template'

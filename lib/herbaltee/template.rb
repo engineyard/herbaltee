@@ -7,26 +7,8 @@ module Herbaltee
       @vars = vars
     end
 
-    def blank
-      binding
-    end
-
-    def binder(vars = {})
-      b = blank
-      vars.each {|k,v| define_singleton_method("ht_#{k}") { v }}
-      b
-    end
-
-    def method_missing(meth, *args)
-      if respond_to?("ht_#{meth}")
-        send("ht_#{meth}")
-      else
-        super
-      end
-    end
-
     def render
-      b = binder(@vars)
+      b = Binder.new(@vars).__binding__
       template = ERB.new(@content)
       template.result(b)
     end
